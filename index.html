@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>⚡ Aidid It — Preloved Tech & Clothes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Catppuccin Latte palette */
+    :root {
+      --base:    #eff1f5; /* background */
+      --mantle:  #e6e9ef; /* slightly darker bg */
+      --crust:   #dce0e8; /* borders */
+      --surface0:#ccd0da;
+      --surface1:#bcc0cc;
+      --text:    #4c4f69; /* main text */
+      --subtext: #6c6f85; /* muted */
+      --mauve:   #8839ef; /* accent */
+      --pink:    #ea76cb;
+      --peach:   #fe640b; /* price / highlight */
+      --green:   #40a02b;
+      --red:     #d20f39;
+      --lavender:#7287fd;
+    }
+
+    body {
+      background: var(--base);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 2rem;
+      border-bottom: 1px solid var(--crust);
+      background: var(--mantle);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .logo span { color: var(--mauve); }
+    .nav-badge {
+      background: var(--mauve);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      border: 1px solid var(--surface0);
+      color: var(--subtext);
+      font-size: 0.78rem;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.04em;
+      background: var(--mantle);
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 8vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+      color: var(--text);
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--mauve);
+    }
+    .hero p {
+      color: var(--subtext);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+    }
+    .hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--subtext);
+      font-size: 0.85rem;
+    }
+    .hero-location::before { content: "📍"; }
+
+    /* CTA */
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-primary { background: var(--mauve); color: #fff; }
+    .btn-outline { border: 1px solid var(--surface0); color: var(--text); background: var(--mantle); }
+
+    /* IMAGE GRID */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--subtext);
+      margin-bottom: 1.2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--mantle);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--crust);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(76,79,105,0.1); }
+    /* IMAGE SLOT — replace src to update images */
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      background: var(--surface0);
+    }
+    /* Placeholder when no image */
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface0);
+      color: var(--subtext);
+      font-size: 2rem;
+      gap: 0.5rem;
+    }
+    .card-img-placeholder span {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-body { padding: 1rem; }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    .card-price {
+      color: var(--peach);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .card-status {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-top: 0.5rem;
+    }
+    .status-available { background: #d4efcf; color: var(--green); }
+    .status-sold { background: #f5d0d8; color: var(--red); }
+
+    /* SERVICES */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .service-card {
+      background: var(--mantle);
+      border: 1px solid var(--crust);
+      border-radius: 12px;
+      padding: 1.4rem;
+    }
+    .service-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .service-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+    .service-desc { color: var(--subtext); font-size: 0.8rem; line-height: 1.5; }
+
+    /* DIVIDER */
+    hr { border: none; border-top: 1px solid var(--crust); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      color: var(--subtext);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--crust);
+      background: var(--mantle);
+    }
+    footer a { color: var(--mauve); text-decoration: none; }
+    footer .footer-muted { margin-top: 0.5rem; color: var(--surface1); }
+
+    @media (max-width: 480px) {
+      .hero { padding: 3.5rem 1.2rem 2.5rem; }
+      .section { padding: 2rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">⚡ Aidid <span>It</span></div>
+    <div class="nav-badge">Klang Valley</div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Preloved Tech · Clothes · Errands · Deliveries</div>
+    <h1>Because you've got<br/><em>better things</em> to do.</h1>
+    <p>Quality preloved finds — phones, gadgets, clothes — all curated and fairly priced. DM to order, we handle the rest.</p>
+    <div class="cta-group">
+      <a href="https://wa.me/60XXXXXXXXX" class="btn btn-primary">💬 DM to Order</a>
+      <a href="#listings" class="btn btn-outline">Browse Items ↓</a>
+    </div>
+    <div class="hero-location">Klang Valley, Malaysia</div>
+  </div>
+
+  <hr/>
+
+  <!-- LISTINGS -->
+  <div class="section" id="listings">
+    <div class="section-label">📦 Current Listings</div>
+    <div class="grid">
+
+      <!-- ITEM CARD — duplicate this block to add more items -->
+      <div class="card">
+        <!-- To change image: replace the placeholder div below with:
+             <img class="card-img" src="your-photo.jpg" alt="Item name"> -->
+        <div class="card-img-placeholder">
+          📱
+          <span>Add photo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">iPhone 12 64GB</div>
+          <div class="card-price">RM 899</div>
+          <div class="card-status status-available">Available</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-placeholder">
+          💻
+          <span>Add photo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">MacBook Air M1</div>
+          <div class="card-price">RM 2,800</div>
+          <div class="card-status status-available">Available</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-placeholder">
+          👕
+          <span>Add photo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Vintage Polo Shirt</div>
+          <div class="card-price">RM 45</div>
+          <div class="card-status status-sold">Sold</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-placeholder">
+          🎧
+          <span>Add photo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Sony WH-1000XM4</div>
+          <div class="card-price">RM 650</div>
+          <div class="card-status status-available">Available</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- SERVICES -->
+  <div class="section">
+    <div class="section-label">🛠 What We Do</div>
+    <div class="services">
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <div class="service-title">Preloved Tech</div>
+        <div class="service-desc">Phones, laptops, earbuds — tested & honest condition reports.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👗</div>
+        <div class="service-title">Preloved Clothes</div>
+        <div class="service-desc">Curated fits, clean condition. No fast fashion nonsense.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛵</div>
+        <div class="service-title">Errands</div>
+        <div class="service-desc">Got stuff to settle? We run it for you around KV.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📦</div>
+        <div class="service-title">Deliveries</div>
+        <div class="service-desc">Same-day drop-offs within Klang Valley. DM for rates.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>⚡ Aidid It · Klang Valley · <a href="https://wa.me/60XXXXXXXXX">DM to order</a></p>
+    <p style="margin-top:0.5rem; color:var(--surface1);">© 2025 Aidid It. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
